@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>(BUD001)Student Search</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/container.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/base.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+<script type="text/javascript" src="JavaScript/general.js" ></script>
+<script type="text/javascript" src="JavaScript/accordion-menu.js" ></script>
+<script type="text/javascript">
+    window.onload=function()
+    {
+        menu();
+        var param = getPara('flag');
+        if(param==1)
+        {
+            document.getElementById('list').style.display="none";           
+        }
+        else if(param==2)
+        {
+            document.getElementById('list').style.display="block";
+        }      
+
+    }
+    function changeName()
+    {
+        var ascName = document.getElementById('ascName').style.display;
+        var dscName = document.getElementById('dscName').style.display;
+        if(ascName == 'none')
+        {
+            document.getElementById('ascName').style.display = 'inline';
+            document.getElementById('dscName').style.display= 'none';
+        }
+        else if(ascName == 'inline')
+        {
+            document.getElementById('ascName').style.display = 'none';
+            document.getElementById('dscName').style.display= 'inline';
+        }
+    }
+    function searchList()
+    {
+        document.getElementById('list').style.display="block";
+    }
+
+    function resetForm()
+    {
+        document.getElementById('message').innerHTML = "Message";
+        document.getElementById('list').style.display="none";
+    }
+
+   
+</script>
+</h:head>
+<h:body class="main_body">
+
+	
+	<div id="header">
+        <div id="title">
+            <a href="M00001.html">Student Registration Assignment</a>
+        </div>
+          <div id="menuLoginTime">
+            <table>
+                <tr>
+                    <td>User</td><td>: U999999 Mo Kham</td>
+                </tr>
+                <tr>
+                    <td>Current Date</td><td>:  YYYY/MM/DD hh:mm:ss</td>
+                </tr>
+            </table>
+        </div>
+        <input id="btn_logout" class="button" type="button" value="Logout" onclick="location.href='LGN001.xhtml'"/>    
+    </div>
+
+    <div id="container"> 
+            <div id="left_menu">
+            <h:form>
+            <p:menu toggleable="true" style="background-color: #FED8B1;  width:100%;">
+		        <p:submenu label="Class Management">
+		            <p:menuitem value="Class Registration" action="class.xhtml" />
+		            <p:menuitem value="Student Search" action="studentSearch.xhtml"/>
+		            <p:menuitem value="Student Registration" action="studentRegistration.xhtml" />
+		        </p:submenu> 
+		    </p:menu>
+		    <p:menu style="background-color: #FED8B1; width: 100%;">
+
+		    <p:menuitem value="User Management" action="userMangement.xhtml"></p:menuitem>
+		    
+		    </p:menu>
+            </h:form>
+   
+            </div>
+            <div id="main_contents">     
+                <div id="contents">
+                    <div class="search_form">
+                        <h3>Student Search Page</h3>
+                    <h:form>
+                        <table class="tableForm">
+                            <tr>
+                                <td class="tblLabel"><h:outputLabel for="id">Student No</h:outputLabel></td>                       
+                                <td class="tblInputShort"><p:inputText id="id" value="#{studentController.student.stdId}"/> </td>
+                                <td class="tblLabel"><h:outputLabel for="name">Student Name</h:outputLabel></td>  
+                                <td class="tblInputShort"><p:inputText id="name" value="#{studentController.student.stdName}"/></td>
+                            </tr> 
+                            <tr>
+                                <td class="tblLabel"><h:outputLabel for="c_name">Class Name</h:outputLabel></td> 
+                                <td class="tblInputNormal" colspan="3"><p:inputText id="c_name" value="#{studentController.student.classes}"/></td>   
+                            </tr>                                        
+                        </table>
+                        <br/> 
+                            <h:commandButton  value="Search" class="btn btn-primary" />&nbsp;&nbsp;&nbsp;
+                            <h:commandButton value="Reset" class="btn btn-primary" onClick="resetForm()"/>
+                        <br/><br/>
+                            <div id="errormsg">
+                                <label id="message">Message</label>
+                            </div>  
+                    </h:form>
+            <div id="list">
+                <form name="listForm" >
+                    <br/><br/>
+                    <br />
+                    <table class="resultTable">
+                        <tr class="tblHeader">
+                            <th width="5%">No</th>
+                            <th width="10%">Student No</th>
+                            <th width="25%">Student Name</th>
+                            <th width="40%">Class Name</th>
+                            <th width="10%">Registered Date</th>
+                            <th width="10%">Status</th>
+                        </tr>
+                        <tr>
+                            <td>01 </td>
+                            <td>STU0001 </td>
+                            <td><a href="BUD002-01.html">Kyaw Kyaw </a></td>
+                            <td>Java Web Development</td>
+                            <td>2016/09/16 </td>
+                            <td>Attending</td>
+                        </tr>
+
+            
+                        <tr>
+                            <td>02 </td>
+                            <td>STU0002 </td>
+                            <td><a href="BUD002-01.html">Aung Aung </a></td>
+                            <td>Programming Fundamental 1</td>
+                            <td>2016/09/16 </td>
+                            <td>Passed</td>
+                        </tr>
+
+                        <tr>
+                            <td>03 </td>
+                            <td>STU0003 </td>
+                            <td><a href="BUD002-01.html">Zaw Zaw  </a></td>
+                            <td>PHP Basic</td>
+                            <td>2016/09/16 </td>
+                            <td>Failed</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>04 </td>
+                            <td>STU0004  </td>
+                            <td><a href="BUD002-01.html">Mya Mya  </a></td>
+                            <td>Programming Fundamental 2</td>
+                            <td>2016/09/16 </td>
+                            <td>Passed</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>05 </td>
+                            <td>STU0005</td>
+                            <td><a href="BUD002-01.html">Hla Hla  </a></td>
+                            <td>Software Engineering 1</td>
+                            <td>2016/09/16 </td>
+                            <td>Passed</td>
+                        </tr>
+            
+                        <tr>
+                            <td>06 </td>
+                            <td>STU0006  </td>
+                            <td><a href="BUD002-01.html">Toe Toe  </a></td>
+                            <td>Software Engineering 2</td>
+                            <td>2016/09/16 </td>
+                            <td>Attending</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>07 </td>
+                            <td>STU0007</td>
+                            <td><a href="BUD002-01.html">Aung Kyaw </a></td>
+                            <td>Software Engineering 2</td>
+                            <td>2016/09/16 </td>
+                            <td>Attending</td>
+                        </tr>
+                        <tr>
+                            <td>08 </td>
+                            <td>STU0008</td>
+                            <td><a href="BUD002-01.html">Win Aung  </a></td>
+                            <td>Android Development</td>
+                            <td>2016/09/16 </td>
+                            <td>Attending</td>
+                        </tr>
+                        <tr> 
+                            <td>09 </td>
+                            <td>STU0009</td>
+                            <td><a href="BUD002-01.html">Kyawt Kyawt  </a></td>
+                            <td>Microsoft .Net Development</td>
+                            <td>2016/09/16 </td>
+                            <td>Attending</td>
+                        </tr>
+                        <tr>
+                            <td>10 </td>
+                            <td>STU0010</td>
+                            <td><a href="BUD002-01.html">Nay Chi  </a></td>
+                            <td>PHP Basic</td>
+                            <td>2016/09/16 </td>
+                            <td>Attending</td>
+                        </tr>
+                    </table>
+                    <br/>
+                    
+                </form>
+            </div> 
+                    </div>   
+                </div>  
+            </div>
+            
+     </div>
+
+    <div class="footer"> 
+            <span>Copyright &#169; ACE Inspiration 2016</span>        
+    </div>
+</h:body>
+</html>
