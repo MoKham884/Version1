@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>(BUD002)Student Register</title>
+	<link rel="stylesheet" type="text/css" href="stylesheets/container.css" />
+	<link rel="stylesheet" type="text/css" href="stylesheets/base.css" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+	<script type="text/javascript" src="JavaScript/general.js"></script>
+	<script type="text/javascript" src="JavaScript/accordion-menu.js"></script>
+	<script type="text/javascript">
+    window.onload=function()
+    {
+        menu();
+    }
+
+	function myRegister() {
+        confirm("Welcome for Registration!");
+	}
+	
+	
+
+	
+	function myUpdate(){
+	   confirm("Welcome for Update!");
+	}
+	
+	function showMessage(){     
+        var message = confirm("Are you sure to register?");
+        if(message)                 
+        document.getElementById('message').innerHTML = "Registration completed.";    
+    }
+	
+	function delete()
+    {
+        var message = confirm("Are you sure to delete?");
+        if(message)
+        {
+            document.getElementById('message').innerHTML = "Successfully Delete!";
+        }
+        
+	function changeButton(){     
+        var message = confirm("Are you sure to update?");
+             
+        document.getElementById("btnGroup").value="Update";    
+    }
+	
+</script>
+</h:head>
+<h:body class="main_body">
+
+	<div id="header">
+		<div id="title">
+			<a href="M00001.html">Student Registration Assignment</a>
+		</div>
+		<div id="menuLoginTime">
+			<table>
+				<tr>
+					<td>User</td>
+					<td>: U999999 Kyaw Kyaw</td>
+				</tr>
+				<tr>
+					<td>Current Date</td>
+					<td>: YYYY/MM/DD hh:mm:ss</td>
+				</tr>
+			</table>
+		</div>
+		<input id="btn_logout" class="button" type="button" value="Logout"
+			onclick="location.href='LGN001.html'" />
+	</div>
+
+	<div id="container">
+		<div id="left_menu">
+   <h:form>
+            <p:menu toggleable="true" style="background-color: #FED8B1;  width:100%;">
+		        <p:submenu label="Class Management">
+		            <p:menuitem value="Class Registration" action="class.xhtml" />
+		            <p:menuitem value="Student Search" action="searchstudent.xhtml"/>
+		            <p:menuitem value="Student Registration" action="studentRegistration.xhtml" />
+		        </p:submenu> 
+		    </p:menu>
+		    <p:menu style="background-color: #FED8B1; width: 100%;">
+
+		    <p:menuitem value="User Management" action="userMangement.xhtml"></p:menuitem>
+		    
+		    </p:menu>
+            </h:form>		</div>
+		<div id="main_contents">
+			<div id="contents">
+				<div class="search_form">
+					<h:form>
+				<p:panel id ="panel">	
+				<h3>Search Student</h3>
+
+						<p:messages id="msgs" severity="warn" />
+						<table class="tableForm">
+
+							<tr>
+								<td class="tblSingleLabel"><h:outputLabel for="id">Student No</h:outputLabel>
+								</td>
+								<td class="tblSingleInput"><p:inputText id="id"
+										value="#{studentController.student.stdId}"
+										style="width: 300px;">
+									</p:inputText></td>
+							</tr>
+							<tr>
+								<td class="tblSingleLabel"><h:outputLabel for="name">Student Name</h:outputLabel>
+								</td>
+								<td class="tblSingleInput"><p:inputText id="name"
+										value="#{studentController.student.stdName}"
+										style="width: 300px;">
+									</p:inputText>&nbsp;</td>
+							</tr>
+
+							<tr>
+								<td class="tblSingleLabel"><h:outputLabel for="class">Class Name</h:outputLabel>
+								</td>
+								<td class="tblSingleInput"><p:inputText id="class"
+										value="#{studentController.student.classes}"
+										style="width: 300px;">
+									</p:inputText>&nbsp;</td>
+							</tr>
+
+						</table>
+						<br />
+						<div id="btnGroup">
+							<h:commandButton action="#{studentController.searchStudent()}"
+								value="Search" class="btn btn-primary" />&nbsp;&nbsp;
+                                        <h:commandButton class="btn btn-primary" value="Reset" update="panel" process="@this" action="#{studentController.reset()}" style="margin-right:20px;" />
+                            
+                        <br/><br/>
+								
+						</div>
+						</p:panel>
+					</h:form>
+
+						<br></br>
+						<div class="stlist">
+						<h:form>
+						<p:panel id ="listform">
+							<f:facet name="header">
+                           Search Students
+                        <p:commandButton
+									action="#{studentController.fetchAll()}" icon="pi pi-refresh"
+									update="@form" process="@this" />
+							</f:facet>
+							<p:dataTable var="s" value="#{studentController.studentList}"
+								rows="10" paginator="true">
+
+								<p:column headerText=" Student No" width="10%">
+									<h:outputText value="#{s.stdId}" />
+								</p:column>
+
+								<p:column headerText="Student Name">
+
+									<h:outputText value="#{s.stdName}" />
+								</p:column>
+
+								<p:column headerText="Class">
+									<h:outputText value="#{s.classes}" />
+								</p:column>
+
+
+								<p:column headerText="Register Date">
+									<h:outputText value="#{s.date}">
+										<f:convertDateTime pattern="yyyy-MM-dd hh:mm:ss" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Status">
+									<h:outputText value="#{s.status}" />
+								</p:column>
+
+								<p:column headerText="Options" width="10%">
+
+									<!-- <p:button icon="pi pi-pencil"
+										action="#{studentController.edit(s)}" update="@form"
+										process="@this"></p:button>
+										
+										<h:commandButton id="enterModelButton" type="button" value="Enter" action="studentRegistration?faces-redirect=true" >
+		        					<f:ajax />
+		   								 </h:commandButton> -->
+		   								 
+		   								 <h:commandButton id="enterModelButton"  icon="pi pi-pencil" action="studentRegistration?faces-redirect=true" >
+		        					<f:ajax />
+		   								 </h:commandButton>
+		   								 
+									<p:commandButton icon="pi pi-trash"
+										action="#{studentController.delete(s.stdId)}" update="@form"
+										process="@this"
+										onclick="if (!(confirm('Are you sure you want to delete this Student?'))) return false" />
+
+								</p:column>
+							</p:dataTable>
+							
+						</p:panel>
+</h:form>
+</div>
+
+
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<span>Copyright &#169; ACE Inspiration 2016</span>
+	</div>
+</h:body>
+</html>
