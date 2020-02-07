@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title>(BUD002)Student Register</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/container.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/base.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+<script type="text/javascript" src="JavaScript/general.js" ></script>
+<script type="text/javascript" src="JavaScript/accordion-menu.js" ></script>
+<script type="text/javascript">
+    window.onload=function()
+    {
+        menu();
+    }
+
+	function myRegister() {
+        confirm("Welcome for Registration!");
+	}
+	
+	function myUpdate(){
+	   confirm("Welcome for Update!");
+	}
+	
+	function showMessage(){     
+        var message = confirm("Are you sure to register?");
+        if(message)                 
+        document.getElementById('message').innerHTML = "Registration completed.";    
+    }
+	
+</script>
+</h:head>
+<h:body class="main_body">
+
+	<div id="header">
+        <div id="title">
+            <a href="M00001.html">Student Registration Assignment</a>
+        </div>
+          <div id="menuLoginTime">
+            <table>
+                <tr>
+                    <td>User</td><td>: U999999 Mo Kham</td>
+                </tr>
+                <tr>
+                    <td>Current Date</td><td>:  YYYY/MM/DD hh:mm:ss</td>
+                </tr>
+            </table>
+        </div>
+        <input id="btn_logout" class="button" type="button" value="Logout" onclick="location.href='LGN001.xhtml'" />    
+    </div>
+
+    <div id="container"> 
+        <div id="left_menu">
+            <!-- menu html code exist the menu function of general.js -->
+            <h:form>
+            <p:menu toggleable="true" style="background-color: #FED8B1;  width:100%;">
+		        <p:submenu label="Class Management">
+		            <p:menuitem value="Class Registration" action="class.xhtml" />
+		            <p:menuitem value="Student Search" action="studentSearch.xhtml"/>
+		            <p:menuitem value="Student Registration" action="studentRegistration.xhtml" />
+		        </p:submenu> 
+		    </p:menu>
+		    <p:menu style="background-color: #FED8B1; width: 100%;">
+
+		    <p:menuitem value="User Management" action="userMangement.xhtml"></p:menuitem>
+		    
+		    </p:menu>
+            </h:form>
+        </div>
+        <div id="main_contents">     
+            <div id="contents">
+                <div class="search_form">
+                <h:form>
+                    <h3>Student Register</h3>
+                    
+					 <p:messages id="msgs" severity="warn"/>
+                    <table class="tableForm">
+                    
+                        <tr>
+                            <td class="tblSingleLabel">
+                            	<h:outputLabel for="id">Student No</h:outputLabel>
+                            </td>
+                            <td class="tblSingleInput">
+                                <p:inputText id="id" value="#{studentController.student.stdId}" required="true" requiredMessage="Name is Required!" validatorMessage="Name length must be 3~12!" style="width: 300px;">
+							      	<f:validateLength minimum="3" maximum="20" />
+							    </p:inputText>&nbsp;
+							    <p:message for="id" style="color: red;" ></p:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tblSingleLabel">
+                            	<h:outputLabel for="name">Student Name</h:outputLabel>
+							</td>
+                            <td class="tblSingleInput">
+                            	<p:inputText id="name" value="#{studentController.student.stdName}" placeholder="Your Name" required="true" requiredMessage="Name is Required!" validatorMessage="Name length must be 3~20!" style="width: 300px;">
+							      	<f:validateLength minimum="3" maximum="20" /> 
+							    </p:inputText>&nbsp;
+							    <p:message for="name" style="color: red;" ></p:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tblSingleLabel">
+                            	<h:outputLabel for="c_name">Class Name</h:outputLabel>
+                            </td>
+                            <td class="tblSingleInput">  
+                                <p:selectOneMenu id="c_name" value="#{studentController.student.classes}" style="width:150px" required="true" requiredMessage="Choose Your Class!">
+					                <f:selectItem itemLabel="Teacher" itemValue="" noSelectionOption="true" />
+					                <f:selectItem itemLabel="Attending" itemValue="Attending"/>
+					                <f:selectItem itemLabel="Passed" itemValue="Passed"/>
+					                <f:selectItem itemLabel="Failed" itemValue="Failed" />
+					                <f:selectItems value="#{teacherController.teachers}" itemValue="#{teacher.id}" var="teacher" itemLabel="#{teacher.name}" />
+					            </p:selectOneMenu>&nbsp;
+					            <p:message for="c_name" style="color: red;" ></p:message>
+                            </td>                  
+                        </tr>
+                        <tr>
+                            <td class="tblSingleLabel">
+                            	<p:outputLabel for="date">Register Date</p:outputLabel>
+                            </td>
+                            <td class="tblSingleInput">  
+                                <p:calendar id="date" value="#{studentController.student.date}" locale="en" yearRange="2020:2023" navigator="true" pattern="dd-MMM-yyyy" required="true" requiredMessage="Choose your Register Date!"/>
+		     					&nbsp;<p:message for="date" style="color: red;" />
+                            </td>                  
+                        </tr>
+                        <tr>
+                            <td class="tblSingleLabel">
+                            	<p:outputLabel for="status">Status</p:outputLabel>
+                            </td>
+                            <td class="tblSingleInput">webapp
+                                <p:selectOneMenu id="status" value="#{studentController.student.status}" style="width:150px" required="true" requiredMessage="Choose Status!" >
+					                <f:selectItem itemLabel="status" itemValue="" noSelectionOption="true" />
+					                <f:selectItem itemLabel="Attending" itemValue="Attending"/>
+					                <f:selectItem itemLabel="Passed" itemValue="Passed"/>
+					                <f:selectItem itemLabel="Failed" itemValue="Failed" />
+					                <!-- <f:selectItems value="#{teacherController.teachers}" itemValue="#{teacher.id}" var="teacher" itemLabel="#{teacher.name}" /> -->
+					            </p:selectOneMenu>
+					            &nbsp;<p:message for="status" style="color: red;" ></p:message>
+                            </td>
+                        </tr>
+                        
+                        
+                    </table>
+		              <br/>
+                    <div id="btnGroup">
+                   		<p:commandButton action="#{studentController.studentSave()}" value="Register" class="btn btn-primary" onclick="javascript:showMessage()" >
+                    
+                    </p:commandButton>
+                    </div>
+                    </h:form>
+                </div> 
+            </div>
+        </div>   
+     </div>
+
+    <div class="footer"> 
+            <span>Copyright &#169; ACE Inspiration 2016</span>        
+    </div>
+</h:body>
+</html>
